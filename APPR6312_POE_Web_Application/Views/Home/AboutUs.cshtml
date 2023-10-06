@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "AboutUs";
+}
+
+<style>
+    /*Hiding navbar (W3Schools, 2023)*/
+    .navbar {
+        visibility: hidden;
+    }
+
+    /*Hiding footer (W3Schools, 2023)*/
+    footer {
+        visibility: hidden;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /*Styling the navigation menu (W3Schools, 2023)*/
+    .topnav {
+        width: 100%;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        overflow: auto;
+        margin: 0; /*Removing default margin (W3Schools, 2023)*/
+        padding: 0; /*Removing default padding (W3Schools, 2023)*/
+    }
+
+    /*Navigation links (W3Schools, 2023)*/
+    .topnav a, .topnav p {
+        float: left;
+        padding: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        width: 25%; /*Six equal-width links (W3Schools, 2023)*/
+        text-align: center;
+        box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+        margin: 0; /*Removing any margin (W3Schools, 2023)*/
+        line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+    }
+
+    /*Adding a background color on mouse-over (W3Schools, 2023)*/
+    .topnav a:hover {
+        background-color: #FF3300;
+    }
+
+    .footer1 {
+        text-align: center;
+        padding: 3px;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        color: white;
+    }
+</style>
+
+<!-- Navigation bar with links to other pages (W3Schools, 2023)-->
+<nav class="topnav" id="myTopnav">
+    <a asp-controller="Home" asp-action="Index">Home</a>
+    <a asp-controller="Home" asp-action="AboutUs">About us</a>
+    <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+    <a asp-controller="Admin" asp-action="AdminLogin">Admin</a>
+</nav>
+
+<br />
+
+<div class="text-center">
+    <h1 class="display-4">About Us</h1>
+</div>
+
+<br />
+<h1 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;">Our Mission</h1>
+    <p style="padding-right: 5%;padding-left: 5%; text-align: justify;">
+        Welcome to the Disaster Alleviation Foundation, a non-profit organization with a steadfast commitment to creating a tangible impact during times of crisis. We've entrusted you with a pivotal role—to construct an indispensable system that harmonizes with our resolute dedication to providing prompt and effective aid in the face of calamities. Our mission is unequivocal: to extend swift and impactful assistance precisely where it's most needed.
+    </p>
+
+<br />
+
+<h1 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;">
+    Donor Support
+</h1>
+    <p style="padding-right: 5%;padding-left: 5%; text-align: justify;">
+        In order to achieve this high goal, we rely on the generosity of a wide range of supporters, including people, firms, organizations, and even governments. This diverse pool of contributors underpins our ability to give really impactful help. Contributions come in varied forms—ranging from tangible items such as clothing and non-perishable foods to monetary offerings. We believe in empowering our donors, affording them the choice to remain anonymous if they so prefer.
+    </p>
+
+<br />
+
+<h1 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;">Ensuring Accountability</h1>
+    <p style="padding-right: 5%;padding-left: 5%; text-align: justify;">
+        Central to our focus is the meticulous oversight of each donation's trajectory. In the realm of disaster relief, the factors of timing and precision are paramount. Consider the scenario where supplies urgently require dispatch to address specific emergencies. Similarly, monetary contributions can be allocated diversely: as direct assistance to local communities or as funding to procure essential supplies destined for disaster-stricken regions.
+    </p>
+
+
+<br />
+
+<h1 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;">Support To Catalyze Change</h1>
+    <p style="padding-right: 5%;padding-left: 5%; text-align: justify;">
+        At the Disaster Alleviation Foundation, we transcend the role of a mere relief organization. We are a community of compassionate individuals, united by a collective mission to extend a supportive hand when it's most essential. Embark on this journey with us as we coalesce to forge a brighter future—a future where hope perseveres even in the face of adversity. Together, we wield the potential to effect genuine change and usher in positive transformations on a global scale.
+    </p>
+
+<br />
+<div class="footer1">
+    <p>
+        Copyright ©2023 Disaster Alleviation Foundation. All rights reserved
+    </p>
+</div>
+
+
