@@ -8,7 +8,7 @@ namespace APPR6312_POE_Web_Application.Controllers
 {
     public class GoodsController : Controller
     {
-        //Connection to database (The IIE, 2022)
+        //Connection to database (The IIE, 2022) 
         APPR6312_POEContext Poe = new APPR6312_POEContext();
 
         //Action method for displaying the form to add a goods donation (Troeslen & Japikse, 2021)
