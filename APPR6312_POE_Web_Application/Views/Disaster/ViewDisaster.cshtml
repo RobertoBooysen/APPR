@@ -132,7 +132,19 @@
                 @Html.DisplayNameFor(model => model.Location)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.NameOfDisaster)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllocatedGoods)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllocatedMoney)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Username)
@@ -152,9 +164,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameOfDisaster)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllocatedGoods)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllocatedMoney)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
