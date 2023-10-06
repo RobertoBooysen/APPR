@@ -191,5 +191,7 @@ namespace APPR6312_POE_Web_Application.Models
         public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateGoods> TblAllocateGoods { get; set; }
 
         public DbSet<APPR6312_POE_Web_Application.Models.TblInventory> TblInventory { get; set; }
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateInventory> TblAllocateInventory { get; set; }
     }
 }
