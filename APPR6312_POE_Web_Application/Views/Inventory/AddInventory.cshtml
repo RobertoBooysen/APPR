@@ -1,0 +1,227 @@
+﻿@model APPR6312_POE_Web_Application.Models.TblInventory
+
+@{
+    ViewData["Title"] = "AddInventory";
+}
+
+<style>
+    /*Hiding navbar (W3Schools, 2023)*/
+    .navbar {
+        visibility: hidden;
+    }
+
+    /*Hiding footer (W3Schools, 2023)*/
+    footer {
+        visibility: hidden;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /*Styling the navigation menu (W3Schools, 2023)*/
+    .topnav {
+        width: 100%;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        overflow: auto;
+        margin: 0; /*Removing default margin (W3Schools, 2023)*/
+        padding: 0; /*Removing default padding (W3Schools, 2023)*/
+    }
+
+        /*Navigation links (W3Schools, 2023)*/
+        .topnav a, .topnav p {
+            float: left;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 16.666%; /*Six equal-width links (W3Schools, 2023)*/
+            text-align: center;
+            box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+            margin: 0; /*Removing any margin (W3Schools, 2023)*/
+            line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+        }
+
+            /*Adding a background color on mouse-over (W3Schools, 2023)*/
+            .topnav a:hover {
+                background-color: #FF3300;
+            }
+
+    .header {
+        width: 100%;
+        margin: 50px auto 0px;
+        color: white;
+        background: #800080;
+        text-align: center;
+        border: 1px solid #FF3300;
+        border-bottom: none;
+        border-radius: 10px 10px 0px 0px;
+        padding: 20px;
+    }
+
+    form, .content {
+        width: 100%;
+        margin: 0px auto;
+        padding: 20px;
+        border: 1px solid #800080;
+        background: white;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .input-group {
+        margin: 10px 0px 10px 0px;
+    }
+
+        .input-group label {
+            display: block;
+            text-align: left;
+            margin: 3px;
+        }
+
+        .input-group input {
+            height: 30px;
+            width: 93%;
+            padding: 5px 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #FF3300;
+        }
+
+    .btn {
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        background: #800080;
+        border: none;
+        border-radius: 15px;
+    }
+
+        .btn:hover {
+            background: #FF3300;
+        }
+
+    .footer1 {
+        text-align: center;
+        padding: 3px;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        color: white;
+    }
+    /*The container  (W3Schools, 2023)*/
+    .custom-checkbox {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /*Hide the browser's default checkbox  (W3Schools, 2023)*/
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /*Custom checkbox  (W3Schools, 2023)*/
+        .custom-checkbox .checkmark {
+            position: relative;
+            display: inline-block;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border: 1px solid #FF3300;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: purple;
+        }
+
+        .custom-checkbox .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 6px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+</style>
+
+<!-- Navigation bar with links to other pages (W3Schools, 2023)-->
+<nav class="topnav" id="myTopnav">
+    <a asp-controller="Admin" asp-action="AdminHome">Home</a>
+    <a asp-controller="Goods" asp-action="ViewGoods">Goods Donations</a>
+    <a asp-controller="Monetary" asp-action="ViewMonetary">Monetary Donations</a>
+    <a asp-controller="Disaster" asp-action="ViewDisaster">Disasters</a>
+    <a asp-controller="Category" asp-action="ViewCategory">Categories</a>
+    <p><b>@DisplayUsername.passUsername</b></p>
+</nav>
+
+<br />
+
+<div class="header">
+    <!--The header is allocated on top of the form (W3Schools, 2023)-->
+    <h1>Add Inventory</h1>
+</div>
+
+<div>
+    <div>
+        <form asp-action="AddInventory">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GoodsInventory" class="control-label"></label>
+                <input asp-for="GoodsInventory" class="form-control" />
+                <span asp-validation-for="GoodsInventory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfInventoryGoods" class="control-label"></label>
+                <input asp-for="NumberOfInventoryGoods" class="form-control" min="1" />
+                <span asp-validation-for="NumberOfInventoryGoods" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchasedAmount" class="control-label"></label>
+                <input asp-for="PurchasedAmount" class="form-control" />
+                <span asp-validation-for="PurchasedAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-action="ViewInventory" class="btn">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<div class="footer1">
+    <p>
+        Copyright ©2023 Disaster Alleviation Foundation. All rights reserved
+    </p>
+</div>
