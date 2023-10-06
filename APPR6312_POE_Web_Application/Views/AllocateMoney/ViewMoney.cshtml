@@ -1,0 +1,163 @@
+﻿@model IEnumerable<APPR6312_POE_Web_Application.Models.TblAllocateMoney>
+
+@{
+    ViewData["Title"] = "ViewMoney";
+}
+
+<style>
+    /*Hiding navbar (W3Schools, 2023)*/
+    .navbar {
+        visibility: hidden;
+    }
+
+    /*Hiding footer (W3Schools, 2023)*/
+    footer {
+        visibility: hidden;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /*Styling the navigation menu (W3Schools, 2023)*/
+    .topnav {
+        width: 100%;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        overflow: auto;
+        margin: 0; /*Removing default margin */
+        padding: 0; /*Removing default padding */
+    }
+
+        /*Navigation links (W3Schools, 2023)*/
+        .topnav a, .topnav p {
+            float: left;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 16.666%; /*Six equal-width links (W3Schools, 2023)*/
+            text-align: center;
+            box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+            margin: 0; /*Removing any margin (W3Schools, 2023)*/
+            line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+        }
+
+            /*Adding a background color on mouse-over (W3Schools, 2023)*/
+            .topnav a:hover {
+                background-color: #FF3300;
+            }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 20px;
+    }
+
+    th {
+        background-color: #800080;
+        color: white;
+    }
+
+    .btn {
+        padding: 2px 6px;
+        font-size: 15px;
+        color: white;
+        background: #800080;
+        border: none;
+        border-radius: 5px;
+    }
+
+        .btn:hover {
+            background: #FF3300;
+        }
+
+    .header {
+        width: 100%;
+        margin: 50px auto 0px;
+        color: white;
+        background: #800080;
+        text-align: center;
+        border: 1px solid #FF3300;
+        border-bottom: none;
+        border-radius: 10px 10px 0px 0px;
+        padding: 20px;
+    }
+
+    .footer1 {
+        text-align: center;
+        padding: 3px;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        color: white;
+    }
+</style>
+
+<!-- Navigation bar with links to other pages (W3Schools, 2023)-->
+<nav class="topnav" id="myTopnav">
+    <a asp-controller="Admin" asp-action="AdminHome">Home</a>
+    <a asp-controller="Goods" asp-action="ViewGoods">Goods Donations</a>
+    <a asp-controller="Monetary" asp-action="ViewMonetary">Monetary Donations</a>
+    <a asp-controller="Disaster" asp-action="ViewDisaster">Disasters</a>
+    <a asp-controller="Category" asp-action="ViewCategory">Categories</a>
+    <p><b>@DisplayUsername.passUsername</b></p>
+</nav>
+
+<br />
+
+<div class="header">
+    <!--The header is allocated on top of the form (W3Schools, 2023)-->
+    <h1>View Allocated Money</h1>
+</div>
+
+<br />
+
+
+<p>
+    <a asp-action="AddMoney" class="btn">Allocate Money</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Disasters)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Disasters)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                 <a asp-action="DetailsMoney" asp-route-id="@item.AllocateMoneyID" class="btn">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<div class="footer1">
+    <p>
+        Copyright ©2023 Disaster Alleviation Foundation. All rights reserved
+    </p>
+</div>
