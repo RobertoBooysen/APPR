@@ -1,6 +1,8 @@
 ﻿using APPR6312_POE_Web_Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace APPR6312_POE_Web_Application.Controllers
@@ -33,12 +35,20 @@ namespace APPR6312_POE_Web_Application.Controllers
                     //Check if FullName is "Anonymous" to determine anonymity (Troeslen & Japikse, 2021)
                     bool isAnonymous = donation.FullName == "Anonymous";
 
+                    //Calculating the new total received by adding the new donation's amount to the existing total (Troeslen & Japikse, 2021)
+                    int existingTotal = Poe.TblMonetaryDonations.Sum(d => d.TotalReceived);
+                    int newTotalReceived = existingTotal + donation.Amount;
+
+                    //Formatting the time (Troeslen & Japikse, 2021)
+                    donation.Date = DateTime.ParseExact(donation.Date.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
                     //Creating a new monetary donation object and add it to the database (Troeslen & Japikse, 2021)
                     TblMonetaryDonation m = new TblMonetaryDonation()
                     {
                         FullName = donation.FullName,
                         Date = donation.Date,
                         Amount = donation.Amount,
+                        TotalReceived = newTotalReceived,
                         Username = DisplayUsername.passUsername
                     };
                     Poe.TblMonetaryDonations.Add(m);
