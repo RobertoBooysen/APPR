@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "ContactUs";
+}
+
+<style>
+    /*Hiding navbar (W3Schools, 2023)*/
+    .navbar {
+        visibility: hidden;
+    }
+
+    /*Hiding footer (W3Schools, 2023)*/
+    footer {
+        visibility: hidden;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /*Styling the navigation menu (W3Schools, 2023)*/
+    .topnav {
+        width: 100%;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        overflow: auto;
+        margin: 0; /*Removing default margin (W3Schools, 2023)*/
+        padding: 0; /*Removing default padding (W3Schools, 2023)*/
+    }
+
+    /*Navigation links (W3Schools, 2023)*/
+    .topnav a, .topnav p {
+        float: left;
+        padding: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        width: 25%; /*Six equal-width links (W3Schools, 2023)*/
+        text-align: center;
+        box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+        margin: 0; /*Removing any margin (W3Schools, 2023)*/
+        line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+    }
+
+    /*Adding a background color on mouse-over (W3Schools, 2023)*/
+    .topnav a:hover {
+        background-color: #FF3300;
+    }
+
+    .contact-info {
+        margin-top: 30px;
+    }
+
+    .contact-heading {
+        margin-top: 20px;
+    }
+
+    .map-section {
+        margin-top: 40px;
+    }
+
+    .map-container {
+        position: relative;
+        width: 100%;
+        height: 400px; /*Adjust the height as needed (W3Schools, 2023)*/
+        margin-top: 20px;
+    }
+
+    .map-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .footer1 {
+        text-align: center;
+        padding: 3px;
+        background-image: linear-gradient(to left, #FF3300, #800080);
+        color: white;
+    }
+</style>
+
+<!-- Navigation bar with links to other pages (W3Schools, 2023)-->
+<nav class="topnav" id="myTopnav">
+    <a asp-controller="Home" asp-action="Index">Home</a>
+    <a asp-controller="Home" asp-action="AboutUs">About us</a>
+    <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+    <a asp-controller="Admin" asp-action="AdminLogin">Admin</a>
+</nav>
+
+<br />
+
+<div class="text-center">
+    <h1 class="display-4">Contact Us</h1>
+</div>
+
+<br />
+<br />
+
+<div class="text-center">
+    <p>If you have any questions or would like to get in touch, please feel free to reach out to us using the contact information below:</p>
+</div>
+
+<div class="text-center">
+<div class="contact-info">
+    <div class="text-center">
+        <h2 class="contact-heading">Contact Information</h2>
+    </div>
+    <p><strong>Email:</strong> info@disasteralleviation.org</p>
+    <p><strong>Phone:</strong> 042-125-7890</p>
+</div>
+</div>
+
+<div class="map-section">
+    <div class="text-center">
+        <h2 class="contact-heading">Location</h2>
+    </div>
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13238.977572082735!2d25.564567949999997!3d-33.94770174999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e7ad17d0a22f07f%3A0x77fed7838a739be9!2sNewton%20Park%2C%20Gqeberha!5e0!3m2!1sen!2sza!4v1693417083891!5m2!1sen!2sza" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</div>
+
+<br />
+<div class="footer1">
+    <p>
+        Copyright ©2023 Disaster Alleviation Foundation. All rights reserved
+    </p>
+</div>
+
+
+
+
