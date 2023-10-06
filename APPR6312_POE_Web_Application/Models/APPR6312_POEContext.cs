@@ -187,5 +187,7 @@ namespace APPR6312_POE_Web_Application.Models
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateMoney> TblAllocateMoney { get; set; }
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateGoods> TblAllocateGoods { get; set; }
     }
 }
