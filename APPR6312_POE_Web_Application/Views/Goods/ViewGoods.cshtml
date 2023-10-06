@@ -132,6 +132,9 @@
                 @Html.DisplayNameFor(model => model.NumberOfItems)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.NameOfGood)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
@@ -155,6 +158,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfItems)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameOfGood)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Category)
