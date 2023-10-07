@@ -43,6 +43,10 @@ namespace APPR6312_POE_Web_Application.Controllers
                 {
                     ViewBag.Error = "Please enter all fields";
 
+                    //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
+                    var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
+                    ViewBag.ActiveDisasters = activeDisasters;
+
                     //Retrieving a list of goods from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                     List<SelectListItem> goods = Poe.TblGoodsDonations
                         .Select(c => new SelectListItem
@@ -97,7 +101,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         }
                         else
                         {
-                            //Refresh the ViewBag.ActiveDisasters here (Troeslen & Japikse, 2021)
+                            //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
                             var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                             ViewBag.ActiveDisasters = activeDisasters;
 
@@ -119,6 +123,11 @@ namespace APPR6312_POE_Web_Application.Controllers
                     else
                     {
                         ViewBag.Error = "Goods not found";
+
+                        //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
+                        var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
+                        ViewBag.ActiveDisasters = activeDisasters;
+
                         //Retrieve a list of goods from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                         List<SelectListItem> goods = Poe.TblGoodsDonations
                             .Select(c => new SelectListItem
