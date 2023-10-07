@@ -207,6 +207,17 @@
                 <input asp-for="PurchasedAmount" class="form-control" />
                 <span asp-validation-for="PurchasedAmount" class="text-danger"></span>
             </div>
+            <!--Checking if ViewBag.Error is not null or empty before displaying (Troeslen & Japikse, 2021)-->
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                <div style="color: red;">
+                    @ViewBag.Error
+                </div>
+                <br />
+            }
+
+            <p style="color:green;">Available Money: @ViewBag.LastTotalReceived</p>
+
             <div class="form-group">
                 <input type="submit" value="Add Inventory" class="btn btn-primary" />
             </div>

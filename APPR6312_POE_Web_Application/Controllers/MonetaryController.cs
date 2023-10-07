@@ -35,9 +35,11 @@ namespace APPR6312_POE_Web_Application.Controllers
                     //Check if FullName is "Anonymous" to determine anonymity (Troeslen & Japikse, 2021)
                     bool isAnonymous = donation.FullName == "Anonymous";
 
-                    //Calculating the new total received by adding the new donation's amount to the existing total (Troeslen & Japikse, 2021)
-                    int existingTotal = Poe.TblMonetaryDonations.Sum(d => d.TotalReceived);
-                    int newTotalReceived = existingTotal + donation.Amount;
+                    //Getting the last record in the table ordered by Date (Troeslen & Japikse, 2021)
+                    var lastDonation = Poe.TblMonetaryDonations.OrderByDescending(d => d.DonationId).FirstOrDefault();
+
+                    //Calculating the newTotalReceived based on the last donation's TotalReceived (Troeslen & Japikse, 2021)
+                    int newTotalReceived = lastDonation != null ? lastDonation.TotalReceived + donation.Amount : donation.Amount;
 
                     //Formatting the time (Troeslen & Japikse, 2021)
                     donation.Date = DateTime.ParseExact(donation.Date.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);

@@ -16,6 +16,16 @@ namespace APPR6312_POE_Web_Application.Controllers
         {
             var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
             ViewBag.ActiveDisasters = activeDisasters;
+
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             return View();
         }
 
@@ -31,6 +41,16 @@ namespace APPR6312_POE_Web_Application.Controllers
                     ViewBag.Error = "Please enter all fields";
                     var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                     ViewBag.ActiveDisasters = activeDisasters;
+
+                    //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+                    var lastTotalReceived = Poe.TblMonetaryDonations
+                        .OrderByDescending(d => d.DonationId)
+                        .Select(d => d.TotalReceived)
+                        .FirstOrDefault();
+
+                    //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+                    ViewBag.LastTotalReceived = lastTotalReceived;
+
                     return View();
                 }
                 else
@@ -41,9 +61,12 @@ namespace APPR6312_POE_Web_Application.Controllers
 
                     //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
                     var lastTotalReceived = Poe.TblMonetaryDonations
-                        .OrderByDescending(d => d.Date)
+                        .OrderByDescending(d => d.DonationId)
                         .Select(d => d.TotalReceived)
                         .FirstOrDefault();
+
+                    //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+                    ViewBag.LastTotalReceived = lastTotalReceived;
 
                     //Checking if there is enough money available for allocation (Troeslen & Japikse, 2021)
                     if (lastTotalReceived < money.Amount)

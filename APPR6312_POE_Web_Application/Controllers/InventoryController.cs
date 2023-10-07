@@ -14,6 +14,15 @@ namespace APPR6312_POE_Web_Application.Controllers
         //Action method for displaying the form to add inventory(Troeslen & Japikse, 2021)
         public IActionResult AddInventory()
         {
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             return View();
         }
 
@@ -27,6 +36,15 @@ namespace APPR6312_POE_Web_Application.Controllers
                 if (inventory.GoodsInventory == null || inventory.PurchasedAmount == 0)
                 {
                     ViewBag.Error = "Please enter all fields";
+
+                    //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+                    var lastTotalReceived = Poe.TblMonetaryDonations
+                        .OrderByDescending(d => d.DonationId)
+                        .Select(d => d.TotalReceived)
+                        .FirstOrDefault();
+
+                    //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+                    ViewBag.LastTotalReceived = lastTotalReceived;
 
                     return View();
                 }
@@ -56,9 +74,13 @@ namespace APPR6312_POE_Web_Application.Controllers
 
                     //Calculate the total received for the user for inventory purchase (Troeslen & Japikse, 2021)
                     var totalReceivedForInventory = Poe.TblMonetaryDonations
-                        .OrderByDescending(d => d.Date)
+                        .OrderByDescending(d => d.DonationId)
                         .Select(d => d.TotalReceived)
                         .FirstOrDefault();
+                 
+
+                    //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+                    ViewBag.LastTotalReceived = totalReceivedForInventory;
 
                     //Check if there is enough money available for the purchase (Troeslen & Japikse, 2021)
                     if (totalReceivedForInventory < inventory.PurchasedAmount)
@@ -67,20 +89,16 @@ namespace APPR6312_POE_Web_Application.Controllers
                         return View();
                     }
 
-                    //Deducting the purchased amount from the TotalReceived field in relevant donations (Troeslen & Japikse, 2021)
-                    var donationsToUpdate = Poe.TblMonetaryDonations;
-                    foreach (var donation in donationsToUpdate)
+                    // Find the last donation for the current user
+                    var lastDonationToUpdate = Poe.TblMonetaryDonations
+                        .OrderByDescending(d => d.DonationId)
+                        .FirstOrDefault();
+
+                    if (lastDonationToUpdate != null)
                     {
-                        if (inventory.PurchasedAmount > 0)
-                        {
-                            var amountToDeduct = Math.Min(inventory.PurchasedAmount, donation.TotalReceived);
-                            donation.TotalReceived -= amountToDeduct;
-                            inventory.PurchasedAmount -= amountToDeduct;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        var amountToDeduct = Math.Min(inventory.PurchasedAmount, lastDonationToUpdate.TotalReceived);
+                        lastDonationToUpdate.TotalReceived -= amountToDeduct;
+                        inventory.PurchasedAmount -= amountToDeduct;
                     }
 
                     Poe.SaveChanges();
