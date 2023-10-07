@@ -1,5 +1,6 @@
 ﻿using APPR6312_POE_Web_Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,26 +32,70 @@ namespace APPR6312_POE_Web_Application.Controllers
                 }
                 else
                 {
-                    //Creating a new inventory object and add it to the database (Troeslen & Japikse, 2021)
-                    TblInventory m = new TblInventory()
+                    //Check if the GoodsInventory already exists in the database (Troeslen & Japikse, 2021)
+                    var existingInventory = Poe.TblInventory.FirstOrDefault(i => i.GoodsInventory == inventory.GoodsInventory);
+
+                    if (existingInventory != null)
                     {
-                        GoodsInventory = inventory.GoodsInventory,
-                        NumberOfInventoryGoods = inventory.NumberOfInventoryGoods,
-                        PurchasedAmount = inventory.PurchasedAmount,
-                        Username = DisplayUsername.passUsername
-                    };
-                    Poe.TblInventory.Add(m);
+                        //Increment NumberOfInventoryGoods for the existing inventory (Troeslen & Japikse, 2021)
+                        existingInventory.NumberOfInventoryGoods += inventory.NumberOfInventoryGoods;
+                        existingInventory.PurchasedAmount += inventory.PurchasedAmount;
+                    }
+                    else
+                    {
+                        //Create a new inventory object (Troeslen & Japikse, 2021)
+                        TblInventory m = new TblInventory()
+                        {
+                            GoodsInventory = inventory.GoodsInventory,
+                            NumberOfInventoryGoods = inventory.NumberOfInventoryGoods,
+                            PurchasedAmount = inventory.PurchasedAmount,
+                            Username = DisplayUsername.passUsername
+                        };
+                        Poe.TblInventory.Add(m);
+                    }
+
+                    //Calculate the total received for the user for inventory purchase (Troeslen & Japikse, 2021)
+                    var totalReceivedForInventory = Poe.TblMonetaryDonations
+                        .OrderByDescending(d => d.Date)
+                        .Select(d => d.TotalReceived)
+                        .FirstOrDefault();
+
+                    //Check if there is enough money available for the purchase (Troeslen & Japikse, 2021)
+                    if (totalReceivedForInventory < inventory.PurchasedAmount)
+                    {
+                        ViewBag.Error = "Not enough money available for this purchase";
+                        return View();
+                    }
+
+                    //Deducting the purchased amount from the TotalReceived field in relevant donations (Troeslen & Japikse, 2021)
+                    var donationsToUpdate = Poe.TblMonetaryDonations;
+                    foreach (var donation in donationsToUpdate)
+                    {
+                        if (inventory.PurchasedAmount > 0)
+                        {
+                            var amountToDeduct = Math.Min(inventory.PurchasedAmount, donation.TotalReceived);
+                            donation.TotalReceived -= amountToDeduct;
+                            inventory.PurchasedAmount -= amountToDeduct;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
                     Poe.SaveChanges();
+
                     //Redirecting to the ViewInventory action (Troeslen & Japikse, 2021)
                     return RedirectToAction("ViewInventory");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.Error = "Inventory already in the database";
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
+
         //Action method for displaying the list of inventory (Troeslen & Japikse, 2021)
         public IActionResult ViewInventory()
         {
