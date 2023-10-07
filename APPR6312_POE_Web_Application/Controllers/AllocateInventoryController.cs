@@ -43,11 +43,11 @@ namespace APPR6312_POE_Web_Application.Controllers
                 {
                     ViewBag.Error = "Please enter all fields";
 
-                    //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
+                    //Retrieving a list of active disasters (Troeslen & Japikse, 2021)
                     var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                     ViewBag.ActiveDisasters = activeDisasters;
 
-                    //Retrieving a list of goods in inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
+                    //Retrieving a list of goods in the inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                     List<SelectListItem> goodsInventory = Poe.TblInventory
                         .Select(c => new SelectListItem
                         {
@@ -70,16 +70,29 @@ namespace APPR6312_POE_Web_Application.Controllers
                         //Check if there are enough items available (Troeslen & Japikse, 2021)
                         if (inventoryDonation.NumberOfInventoryGoods >= allocateInventory.NumberOfInventoryGoods)
                         {
-                            //Create a new allocate inventory object (Troeslen & Japikse, 2021)
-                            TblAllocateInventory m = new TblAllocateInventory()
+                            //Find existing allocation for the same disaster and goods (Troeslen & Japikse, 2021)
+                            var existingAllocation = Poe.TblAllocateInventory.FirstOrDefault(a => a.Disasters == allocateInventory.Disasters && a.GoodsInventory == allocateInventory.GoodsInventory);
+
+                            if (existingAllocation != null)
                             {
-                                Disasters = allocateInventory.Disasters,
-                                GoodsInventory = allocateInventory.GoodsInventory,
-                                NumberOfInventoryGoods = allocateInventory.NumberOfInventoryGoods,
-                                Username = DisplayUsername.passUsername
-                            };
-                            //Add the inventory allocation to the database (Troeslen & Japikse, 2021)
-                            Poe.TblAllocateInventory.Add(m);
+                                //Increment the existing allocation's quantity (Troeslen & Japikse, 2021)
+                                existingAllocation.NumberOfInventoryGoods += allocateInventory.NumberOfInventoryGoods;
+                            }
+                            else
+                            {
+                                //Create a new allocate inventory object (Troeslen & Japikse, 2021)
+                                TblAllocateInventory m = new TblAllocateInventory()
+                                {
+                                    Disasters = allocateInventory.Disasters,
+                                    GoodsInventory = allocateInventory.GoodsInventory,
+                                    NumberOfInventoryGoods = allocateInventory.NumberOfInventoryGoods,
+                                    Username = DisplayUsername.passUsername
+                                };
+
+                                //Add the inventory allocation to the database (Troeslen & Japikse, 2021)
+                                Poe.TblAllocateInventory.Add(m);
+                            }
+
                             //Decrement the NumberOfInventoryGoods in the goods donation (Troeslen & Japikse, 2021)
                             inventoryDonation.NumberOfInventoryGoods -= allocateInventory.NumberOfInventoryGoods;
                             Poe.SaveChanges();
@@ -91,7 +104,36 @@ namespace APPR6312_POE_Web_Application.Controllers
                                 if (disaster.AllocatedGoods == "None")
                                     disaster.AllocatedGoods = allocateInventory.GoodsInventory + ": " + allocateInventory.NumberOfInventoryGoods;
                                 else
-                                    disaster.AllocatedGoods += ", " + allocateInventory.GoodsInventory + ": " + allocateInventory.NumberOfInventoryGoods;
+                                {
+                                    //Splitting the AllocatedGoods string to find existing allocations (Troeslen & Japikse, 2021)
+                                    var allocatedGoodsList = disaster.AllocatedGoods.Split(',').Select(s => s.Trim()).ToList();
+                                    bool updated = false;
+
+                                    //Iterating through the existing allocations to find and update the matching one (Troeslen & Japikse, 2021)
+                                    for (int i = 0; i < allocatedGoodsList.Count; i++)
+                                    {
+                                        var allocation = allocatedGoodsList[i].Split(':').Select(s => s.Trim()).ToList();
+                                        if (allocation[0] == allocateInventory.GoodsInventory)
+                                        {
+                                            //Incrementing the number of goods for the existing item (Troeslen & Japikse, 2021)
+                                            int currentCount = int.Parse(allocation[1]);
+                                            currentCount += allocateInventory.NumberOfInventoryGoods;
+                                            allocation[1] = currentCount.ToString();
+                                            allocatedGoodsList[i] = string.Join(": ", allocation);
+                                            updated = true;
+                                            break;
+                                        }
+                                    }
+
+                                    //If the allocation doesn't exist, add it to the list (Troeslen & Japikse, 2021)
+                                    if (!updated)
+                                    {
+                                        allocatedGoodsList.Add(allocateInventory.GoodsInventory + ": " + allocateInventory.NumberOfInventoryGoods);
+                                    }
+
+                                    //Joining the updated allocation list and update the AllocatedGoods field (Troeslen & Japikse, 2021)
+                                    disaster.AllocatedGoods = string.Join(", ", allocatedGoodsList);
+                                }
 
                                 Poe.SaveChanges();
                             }
@@ -101,12 +143,12 @@ namespace APPR6312_POE_Web_Application.Controllers
                         }
                         else
                         {
-                            //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
+                            //Refresh the ViewBag.ActiveDisasters here (Troeslen & Japikse, 2021)
                             var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                             ViewBag.ActiveDisasters = activeDisasters;
 
                             ViewBag.Error = "Not enough items available in inventory";
-                            //Retrieving a list of goods in inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
+                            //Retrieving a list of goods in the inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                             List<SelectListItem> goodsInventory = Poe.TblInventory
                                 .Select(c => new SelectListItem
                                 {
@@ -124,12 +166,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                     else
                     {
                         ViewBag.Error = "Inventory not found";
-
-                        //Refreshing the ViewBag.ActiveDisasters (Troeslen & Japikse, 2021)
-                        var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
-                        ViewBag.ActiveDisasters = activeDisasters;
-
-                        //Retrieving a list of goods in inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
+                        //Retrieving a list of goods in the inventory table from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                         List<SelectListItem> goodsInventory = Poe.TblInventory
                             .Select(c => new SelectListItem
                             {
