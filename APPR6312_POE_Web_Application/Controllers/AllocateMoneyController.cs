@@ -41,7 +41,6 @@ namespace APPR6312_POE_Web_Application.Controllers
 
                     //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
                     var lastTotalReceived = Poe.TblMonetaryDonations
-                        .Where(d => d.Username == DisplayUsername.passUsername)
                         .OrderByDescending(d => d.Date)
                         .Select(d => d.TotalReceived)
                         .FirstOrDefault();
@@ -71,7 +70,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         Poe.SaveChanges();
 
                         //Decrease the TotalReceived field for relevant donations (Troeslen & Japikse, 2021)
-                        var donationsToUpdate = Poe.TblMonetaryDonations.Where(d => d.Username == DisplayUsername.passUsername);
+                        var donationsToUpdate = Poe.TblMonetaryDonations;
                         foreach (var donation in donationsToUpdate)
                         {
                             donation.TotalReceived -= money.Amount;
