@@ -47,7 +47,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                     var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                     ViewBag.ActiveDisasters = activeDisasters;
 
-                    //Retrieving a list of goods from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
+                    //Retrieving a list of categories from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                     List<SelectListItem> goods = Poe.TblGoodsDonations
                         .Select(c => new SelectListItem
                         {
@@ -56,7 +56,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         })
                         .ToList();
 
-                    //Passing the list of goods to the view using ViewBag (Troeslen & Japikse, 2021)
+                    //Passing the list of categories to the view using ViewBag (Troeslen & Japikse, 2021)
                     ViewBag.Goods = goods;
 
                     return View();
@@ -70,16 +70,29 @@ namespace APPR6312_POE_Web_Application.Controllers
                         //Check if there are enough items available (Troeslen & Japikse, 2021)
                         if (goodsDonation.NumberOfItems >= allocategoods.NumberOfGoods)
                         {
-                            //Create a new allocate goods object (Troeslen & Japikse, 2021)
-                            TblAllocateGoods m = new TblAllocateGoods()
+                            //Find existing allocation for the same disaster and goods (Troeslen & Japikse, 2021)
+                            var existingAllocation = Poe.TblAllocateGoods.FirstOrDefault(a => a.Disasters == allocategoods.Disasters && a.Goods == allocategoods.Goods);
+
+                            if (existingAllocation != null)
                             {
-                                Disasters = allocategoods.Disasters,
-                                Goods = allocategoods.Goods,
-                                NumberOfGoods = allocategoods.NumberOfGoods,
-                                Username = DisplayUsername.passUsername
-                            };
-                            //Add the goods allocation to the database (Troeslen & Japikse, 2021)
-                            Poe.TblAllocateGoods.Add(m);
+                                //Increment the existing allocation's quantity (Troeslen & Japikse, 2021)
+                                existingAllocation.NumberOfGoods += allocategoods.NumberOfGoods;
+                            }
+                            else
+                            {
+                                //Create a new allocate goods object (Troeslen & Japikse, 2021)
+                                TblAllocateGoods m = new TblAllocateGoods()
+                                {
+                                    Disasters = allocategoods.Disasters,
+                                    Goods = allocategoods.Goods,
+                                    NumberOfGoods = allocategoods.NumberOfGoods,
+                                    Username = DisplayUsername.passUsername
+                                };
+
+                                // Add the goods allocation to the database (Troeslen & Japikse, 2021)
+                                Poe.TblAllocateGoods.Add(m);
+                            }
+
                             //Decrement the NumberOfItems in the goods donation (Troeslen & Japikse, 2021)
                             goodsDonation.NumberOfItems -= allocategoods.NumberOfGoods;
                             Poe.SaveChanges();
@@ -89,9 +102,40 @@ namespace APPR6312_POE_Web_Application.Controllers
                             if (disaster != null)
                             {
                                 if (disaster.AllocatedGoods == "None")
+                                {
                                     disaster.AllocatedGoods = allocategoods.Goods + ": " + allocategoods.NumberOfGoods;
+                                }
                                 else
-                                    disaster.AllocatedGoods += ", " + allocategoods.Goods + ": " + allocategoods.NumberOfGoods;
+                                {
+                                    //Splitting the AllocatedGoods string to find existing allocations (Troeslen & Japikse, 2021)
+                                    var allocatedGoodsList = disaster.AllocatedGoods.Split(',').Select(s => s.Trim()).ToList();
+                                    bool updated = false;
+
+                                    //Iterating through the existing allocations to find and update the matching one (Troeslen & Japikse, 2021)
+                                    for (int i = 0; i < allocatedGoodsList.Count; i++)
+                                    {
+                                        var allocation = allocatedGoodsList[i].Split(':').Select(s => s.Trim()).ToList();
+                                        if (allocation[0] == allocategoods.Goods)
+                                        {
+                                            //Incrementing the number of goods for the existing item (Troeslen & Japikse, 2021)
+                                            int currentCount = int.Parse(allocation[1]);
+                                            currentCount += allocategoods.NumberOfGoods;
+                                            allocation[1] = currentCount.ToString();
+                                            allocatedGoodsList[i] = string.Join(": ", allocation);
+                                            updated = true;
+                                            break;
+                                        }
+                                    }
+
+                                    //If the allocation doesn't exist, add it to the list (Troeslen & Japikse, 2021)
+                                    if (!updated)
+                                    {
+                                        allocatedGoodsList.Add(allocategoods.Goods + ": " + allocategoods.NumberOfGoods);
+                                    }
+
+                                    //Joining the updated allocation list and update the AllocatedGoods field (Troeslen & Japikse, 2021)
+                                    disaster.AllocatedGoods = string.Join(", ", allocatedGoodsList);
+                                }
 
                                 Poe.SaveChanges();
                             }
@@ -114,7 +158,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                                     Text = c.NameOfGood
                                 })
                                 .ToList();
-                            //Passing the list of goods to the view using ViewBag (Troeslen & Japikse, 2021)
+                            //Passing the list of categories to the view using ViewBag (Troeslen & Japikse, 2021)
                             ViewBag.Goods = goods;
                             return View();
                         }
@@ -128,7 +172,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         var activeDisasters = Poe.TblDisasters.Where(d => d.Status == "Active").Select(d => d.NameOfDisaster).ToList();
                         ViewBag.ActiveDisasters = activeDisasters;
 
-                        //Retrieve a list of goods from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
+                        //Retrieve a list of categories from the database and create SelectListItem objects (Troeslen & Japikse, 2021)
                         List<SelectListItem> goods = Poe.TblGoodsDonations
                             .Select(c => new SelectListItem
                             {
@@ -136,7 +180,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                                 Text = c.NameOfGood
                             })
                             .ToList();
-                        //Passing the list of goods to the view using ViewBag (Troeslen & Japikse, 2021)
+                        //Passing the list of categories to the view using ViewBag (Troeslen & Japikse, 2021)
                         ViewBag.Goods = goods;
                         return View();
                     }
