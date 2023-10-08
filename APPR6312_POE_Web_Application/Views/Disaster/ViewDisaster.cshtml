@@ -29,25 +29,25 @@
         padding: 0; /*Removing default padding */
     }
 
-    /*Navigation links (W3Schools, 2023)*/
-    .topnav a, .topnav p {
-        float: left;
-        padding: 12px;
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        width: 12.5%; /*Six equal-width links (W3Schools, 2023)*/
-        text-align: center;
-        box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
-        margin: 0; /*Removing any margin (W3Schools, 2023)*/
-        line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
-    }
+        /*Navigation links (W3Schools, 2023)*/
+        .topnav a, .topnav p {
+            float: left;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 12.5%; /*Six equal-width links (W3Schools, 2023)*/
+            text-align: center;
+            box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+            margin: 0; /*Removing any margin (W3Schools, 2023)*/
+            line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+        }
 
-    /*Adding a background color on mouse-over (W3Schools, 2023)*/
-    .topnav a:hover {
-        background-color: #FF3300;
-    }
+            /*Adding a background color on mouse-over (W3Schools, 2023)*/
+            .topnav a:hover {
+                background-color: #FF3300;
+            }
 
     table {
         border-collapse: collapse;
@@ -73,9 +73,9 @@
         border-radius: 5px;
     }
 
-    .btn:hover {
-        background: #FF3300;
-    }
+        .btn:hover {
+            background: #FF3300;
+        }
 
     .header {
         width: 100%;
@@ -121,6 +121,7 @@
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
+        top: 115px;
     }
 
         /*Links inside the dropdown (W3Schools, 2023)*/
@@ -160,7 +161,7 @@
     <a asp-controller="Disaster" asp-action="ViewDisaster">Disasters</a>
     <a asp-controller="Category" asp-action="ViewCategory">Categories</a>
     <div class="topnav_dropdown">
-        <a style="float: left; padding: 12px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; width: 12.5%; text-align: center; box-sizing: border-box; margin: 0; line-height: 1;"
+        <a style="float: left; padding: 12px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; width: 12.5%; text-align: center; box-sizing: border-box; margin: 0; line-height: 1; width:100%;"
            class="dropbtn">
             Allocating
         </a>
@@ -220,23 +221,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NameOfDisaster)
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AllocatedGoods)
                 </td>
@@ -246,20 +248,29 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                 <a asp-action="EditDisaster" asp-route-id="@item.DisasterId" class="btn">Edit</a> |
-                 <a asp-action="DetailsDisaster" asp-route-id="@item.DisasterId" class="btn">Details</a> |
-                 <a asp-action="DeleteDisaster" asp-route-id="@item.DisasterId" class="btn">Delete</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <a asp-action="EditDisaster" asp-route-id="@item.DisasterId" class="btn">Edit</a> |
+                    <a asp-action="DetailsDisaster" asp-route-id="@item.DisasterId" class="btn">Details</a> |
+                    <a asp-action="DeleteDisaster" asp-route-id="@item.DisasterId" class="btn">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <div class="footer1">
     <p>
         Copyright ©2023 Disaster Alleviation Foundation. All rights reserved

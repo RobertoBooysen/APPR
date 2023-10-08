@@ -29,25 +29,25 @@
         padding: 0; /*Removing default padding (W3Schools, 2023)*/
     }
 
-    /*Navigation links (W3Schools, 2023)*/
-    .topnav a, .topnav p {
-        float: left;
-        padding: 12px;
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        width: 12.5%; /*Six equal-width links (W3Schools, 2023)*/
-        text-align: center;
-        box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
-        margin: 0; /*Removing any margin (W3Schools, 2023)*/
-        line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
-    }
+        /*Navigation links (W3Schools, 2023)*/
+        .topnav a, .topnav p {
+            float: left;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 12.5%; /*Six equal-width links (W3Schools, 2023)*/
+            text-align: center;
+            box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+            margin: 0; /*Removing any margin (W3Schools, 2023)*/
+            line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+        }
 
-    /*Adding a background color on mouse-over (W3Schools, 2023)*/
-    .topnav a:hover {
-        background-color: #FF3300;
-    }
+            /*Adding a background color on mouse-over (W3Schools, 2023)*/
+            .topnav a:hover {
+                background-color: #FF3300;
+            }
 
     .header {
         width: 100%;
@@ -71,9 +71,9 @@
         border-radius: 15px;
     }
 
-    .btn:hover {
-        background: #FF3300;
-    }
+        .btn:hover {
+            background: #FF3300;
+        }
 
     table {
         width: 100%;
@@ -122,6 +122,7 @@
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
+        top: 115px;
     }
 
         /*Links inside the dropdown (W3Schools, 2023)*/
@@ -161,7 +162,7 @@
     <a asp-controller="Disaster" asp-action="ViewDisaster">Disasters</a>
     <a asp-controller="Category" asp-action="ViewCategory">Categories</a>
     <div class="topnav_dropdown">
-        <a style="float: left; padding: 12px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; width: 12.5%; text-align: center; box-sizing: border-box; margin: 0; line-height: 1;"
+        <a style="float: left; padding: 12px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; width: 12.5%; text-align: center; box-sizing: border-box; margin: 0; line-height: 1; width:100%;"
            class="dropbtn">
             Allocating
         </a>
@@ -206,7 +207,7 @@
             <td>@Html.DisplayFor(model => model.Username)</td>
         </tr>
     </table>
-    
+
     <br />
 
     <form asp-action="DeleteMonetary">
