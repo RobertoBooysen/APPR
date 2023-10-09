@@ -115,6 +115,15 @@ namespace APPR6312_POE_Web_Application.Controllers
         //Action method for displaying the list of money allocation (Troeslen & Japikse, 2021)
         public IActionResult ViewMoney()
         {
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             List<TblAllocateMoney> temp = Poe.TblAllocateMoney.ToList();
             return View(temp);
         }

@@ -189,6 +189,20 @@
     <a asp-action="AddMonetary" class="btn">Add New Monetary Donation</a>
 </p>
 
+<p style="color:green;">
+    @if (ViewBag.LastTotalReceived != null)
+    {
+        <text>Available Money: R @ViewBag.LastTotalReceived</text>
+    }
+    <span style="float: right;">
+        @if (ViewBag.totalReceivedSum != null)
+        {
+            <text>Total Received Money: R @ViewBag.totalReceivedSum</text>
+        }
+    </span>
+</p>
+
+
 <table class="table">
     <thead>
         <tr>

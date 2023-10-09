@@ -180,7 +180,7 @@
 
 <div class="header">
     <!--The header is allocated on top of the form (W3Schools, 2023)-->
-    <h1>Inventory</h1>
+    <h1>View Inventory</h1>
 </div>
 
 <br />
@@ -188,6 +188,12 @@
 <p>
     <a asp-action="AddInventory" class="btn">Add New Inventory</a>
 </p>
+
+@if (ViewBag.LastTotalReceived != null)
+{
+    <p style="color:green;">Available Money: R @ViewBag.LastTotalReceived</p>
+}
+
 <table class="table">
     <thead>
         <tr>

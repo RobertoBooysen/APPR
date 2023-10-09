@@ -189,6 +189,12 @@
 <p>
     <a asp-action="AddMoney" class="btn">Allocate Money</a>
 </p>
+
+@if (ViewBag.LastTotalReceived != null)
+{
+    <p style="color:green;">Available Money: R @ViewBag.LastTotalReceived</p>
+}
+
 <table class="table">
     <thead>
         <tr>

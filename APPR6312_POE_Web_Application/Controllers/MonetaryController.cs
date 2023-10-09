@@ -69,6 +69,24 @@ namespace APPR6312_POE_Web_Application.Controllers
         //Action method for displaying the list of monetary donations (Troeslen & Japikse, 2021)
         public IActionResult ViewMonetary()
         {
+            //Getting the total donated amount (Troeslen & Japikse, 2021)
+            var totalReceivedSum = Poe.TblMonetaryDonations
+                .Select(d => d.Amount)
+                .Sum();
+
+            //Add the total donations value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.totalReceivedSum = totalReceivedSum;
+
+
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             List<TblMonetaryDonation> temp = Poe.TblMonetaryDonations.ToList();
             return View(temp);
         }

@@ -117,6 +117,15 @@ namespace APPR6312_POE_Web_Application.Controllers
         //Action method for displaying the list of inventory (Troeslen & Japikse, 2021)
         public IActionResult ViewInventory()
         {
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             List<TblInventory> temp = Poe.TblInventory.ToList();
             return View(temp);
         }
