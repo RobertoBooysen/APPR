@@ -89,7 +89,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         return View();
                     }
 
-                    // Find the last donation for the current user
+                    //Find the last donation for the current user (Troeslen & Japikse, 2021)
                     var lastDonationToUpdate = Poe.TblMonetaryDonations
                         .OrderByDescending(d => d.DonationId)
                         .FirstOrDefault();
