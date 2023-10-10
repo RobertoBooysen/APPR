@@ -128,13 +128,6 @@ namespace APPR6312_POE_Web_Application.Controllers
             //Connection to database (The IIE, 2022)
             APPR6312_POEContext Poe = new APPR6312_POEContext();
 
-            //Setting the default status to "Active" (Troeslen & Japikse, 2021)
-            tblDisaster.Status = "Active";
-
-            //Setting the allocated goods to none and allocated money to 0 (Troeslen & Japikse, 2021)
-            tblDisaster.AllocatedGoods = "None";
-            tblDisaster.AllocatedMoney = 0;
-
             //Formatting the time (Troeslen & Japikse, 2021)
             tblDisaster.StartDate = DateTime.ParseExact(tblDisaster.StartDate.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
             tblDisaster.EndDate = DateTime.ParseExact(tblDisaster.EndDate.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);

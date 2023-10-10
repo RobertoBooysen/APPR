@@ -253,9 +253,10 @@
                     @Html.DisplayFor(modelItem => item.Username)
                 </td>
                 <td>
-                    <a asp-action="EditDisaster" asp-route-id="@item.DisasterId" class="btn">Edit</a> |
-                    <a asp-action="DetailsDisaster" asp-route-id="@item.DisasterId" class="btn">Details</a> |
-                    <a asp-action="DeleteDisaster" asp-route-id="@item.DisasterId" class="btn">Delete</a>
+                    <a asp-action="EditDisaster" asp-route-id="@item.DisasterId" class="btn" style="display: block; margin-bottom: 10px;">Edit</a>
+                    <a asp-action="DetailsDisaster" asp-route-id="@item.DisasterId" class="btn" style="display: block; margin-bottom: 10px;">Details</a>
+                    <a asp-action="DeleteDisaster" asp-route-id="@item.DisasterId" class="btn" style="display: block; margin-bottom: 10px;">Delete</a>
+
                 </td>
             </tr>
         }
