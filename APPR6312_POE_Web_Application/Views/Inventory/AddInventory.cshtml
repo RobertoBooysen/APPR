@@ -273,7 +273,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PurchasedAmount" class="control-label"></label>
-                <input asp-for="PurchasedAmount" class="form-control" />
+                <input asp-for="PurchasedAmount" class="form-control" min="1"/>
                 <span asp-validation-for="PurchasedAmount" class="text-danger"></span>
             </div>
             <!--Checking if ViewBag.Error is not null or empty before displaying (Troeslen & Japikse, 2021)-->
