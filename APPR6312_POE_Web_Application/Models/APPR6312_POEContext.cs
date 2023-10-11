@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using APPR6312_POE_Web_Application.Models;
 
 #nullable disable
 
@@ -184,5 +185,13 @@ namespace APPR6312_POE_Web_Application.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateMoney> TblAllocateMoney { get; set; }
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateGoods> TblAllocateGoods { get; set; }
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblInventory> TblInventory { get; set; }
+
+        public DbSet<APPR6312_POE_Web_Application.Models.TblAllocateInventory> TblAllocateInventory { get; set; }
     }
 }

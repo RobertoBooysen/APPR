@@ -29,25 +29,25 @@
         padding: 0; /*Removing default padding (W3Schools, 2023)*/
     }
 
-    /*Navigation links (W3Schools, 2023)*/
-    .topnav a, .topnav p {
-        float: left;
-        padding: 12px;
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        width: 16.666%; /*Six equal-width links (W3Schools, 2023)*/
-        text-align: center;
-        box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
-        margin: 0; /*Removing any margin (W3Schools, 2023)*/
-        line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
-    }
+        /*Navigation links (W3Schools, 2023)*/
+        .topnav a, .topnav p {
+            float: left;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 12.5%; /*Six equal-width links (W3Schools, 2023)*/
+            text-align: center;
+            box-sizing: border-box; /*Including padding and border in the element's total width (W3Schools, 2023)*/
+            margin: 0; /*Removing any margin (W3Schools, 2023)*/
+            line-height: 1; /*Reseting line height to eliminate extra space (W3Schools, 2023)*/
+        }
 
-    /*Adding a background color on mouse-over (W3Schools, 2023)*/
-    .topnav a:hover {
-        background-color: #FF3300;
-    }
+            /*Adding a background color on mouse-over (W3Schools, 2023)*/
+            .topnav a:hover {
+                background-color: #FF3300;
+            }
 
     .header {
         width: 100%;
@@ -74,20 +74,20 @@
         margin: 10px 0px 10px 0px;
     }
 
-    .input-group label {
-        display: block;
-        text-align: left;
-        margin: 3px;
-    }
+        .input-group label {
+            display: block;
+            text-align: left;
+            margin: 3px;
+        }
 
-    .input-group input {
-        height: 30px;
-        width: 93%;
-        padding: 5px 10px;
-        font-size: 16px;
-        border-radius: 5px;
+        .input-group input {
+            height: 30px;
+            width: 93%;
+            padding: 5px 10px;
+            font-size: 16px;
+            border-radius: 5px;
             border: 1px solid #FF3300;
-    }
+        }
 
     .btn {
         padding: 10px;
@@ -99,8 +99,64 @@
         border-radius: 15px;
     }
 
-    .btn:hover {
-        background: #FF3300;
+        .btn:hover {
+            background: #FF3300;
+        }
+
+    /*The dropdown container (W3Schools, 2023)*/
+    .topnav_dropdown {
+        float: left;
+        text-align: center;
+        overflow: hidden;
+    }
+
+        /* Dropdown button */
+        .topnav_dropdown .topnav_dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit; /*Important for vertical align on mobile phones (W3Schools, 2023)*/
+            margin: 0; /*Important for vertical align on mobile phones (W3Schools, 2023)*/
+        }
+
+        /*Add a red background color to navbar links on hover (W3Schools, 2023)*/
+        .topnav a:hover, .topnav_dropdown:hover .topnav_dropbtn {
+            background-color: red;
+        }
+
+    /*Dropdown content (hidden by default) (W3Schools, 2023)*/
+    .topnav_dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 113.5px;
+    }
+
+        /*Links inside the dropdown (W3Schools, 2023)*/
+        .topnav_dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            /*Add a grey background color to dropdown links on hover (W3Schools, 2023)*/
+            .topnav_dropdown-content a:hover {
+                background-color: #FF3300;
+                color: white;
+            }
+
+    /*Show the dropdown menu on hover (W3Schools, 2023)*/
+    .topnav_dropdown:hover .topnav_dropdown-content {
+        display: block;
     }
 
     .footer1 {
@@ -111,13 +167,26 @@
     }
 </style>
 
-<!-- Navigation bar with links to other pages (W3Schools, 2023)-->
+<!--Navigation bar with links to other pages (W3Schools, 2023)-->
 <nav class="topnav" id="myTopnav">
     <a asp-controller="Admin" asp-action="AdminHome">Home</a>
-    <a asp-controller="Goods" asp-action="ViewGoods">Goods Donations</a>
-    <a asp-controller="Monetary" asp-action="ViewMonetary">Monetary Donations</a>
+    <a asp-controller="Goods" asp-action="ViewGoods">Goods</a>
+    <a asp-controller="Inventory" asp-action="ViewInventory">Inventory</a>
+    <a asp-controller="Monetary" asp-action="ViewMonetary">Monetary</a>
     <a asp-controller="Disaster" asp-action="ViewDisaster">Disasters</a>
     <a asp-controller="Category" asp-action="ViewCategory">Categories</a>
+    <div class="topnav_dropdown">
+        <a style="float: left; padding: 12px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; width: 12.5%; text-align: center; box-sizing: border-box; margin: 0; line-height: 1; width:100%;"
+           class="dropbtn">
+            Allocating
+        </a>
+        <div class="topnav_dropdown-content">
+            <a style=" width: 100%;" asp-controller="AllocateGoods" asp-action="ViewAllocatingGoods">Allocating Goods</a>
+            <a style=" width: 100%;" asp-controller="AllocateInventory" asp-action="ViewAllocatedInventory">Allocating Inventory</a>
+            <a style=" width: 100%;" asp-controller="AllocateMoney" asp-action="ViewMoney">Allocating Money</a>
+        </div>
+    </div>
+
     <p><b>@DisplayUsername.passUsername</b></p>
 </nav>
 
@@ -148,9 +217,22 @@
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="NameOfDisaster" class="control-label"></label>
+                <input asp-for="NameOfDisaster" class="form-control" />
+                <span asp-validation-for="NameOfDisaster" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Active">Active</option>
+                    <option value="Not Active">Not Active</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Add Disaster" class="btn btn-primary" />

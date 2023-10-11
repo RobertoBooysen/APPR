@@ -1,14 +1,16 @@
 ﻿using APPR6312_POE_Web_Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace APPR6312_POE_Web_Application.Controllers
 {
     public class GoodsController : Controller
     {
-        //Connection to database (The IIE, 2022)
+        //Connection to database (The IIE, 2022) 
         APPR6312_POEContext Poe = new APPR6312_POEContext();
 
         //Action method for displaying the form to add a goods donation (Troeslen & Japikse, 2021)
@@ -36,7 +38,7 @@ namespace APPR6312_POE_Web_Application.Controllers
             try
             {
                 //Checking if required fields are empty (Troeslen & Japikse, 2021)
-                if (donation.FullName == null || donation.Date == null || donation.NumberOfItems == 0 || donation.Category == null || donation.Description == null)
+                if (donation.FullName == null || donation.Date == null || donation.NumberOfItems == 0 || donation.NameOfGood == null || donation.Category == null || donation.Description == null)
                 {
                     ViewBag.Error = "Please enter all fields";
 
@@ -58,12 +60,16 @@ namespace APPR6312_POE_Web_Application.Controllers
                     //Check if FullName is "Anonymous" to determine anonymity (Troeslen & Japikse, 2021)
                     bool isAnonymous = donation.FullName == "Anonymous";
 
+                    //Formatting the time (Troeslen & Japikse, 2021)
+                    donation.Date = DateTime.ParseExact(donation.Date.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
                     //Creating a new goods donation object and add it to the database (Troeslen & Japikse, 2021)
                     TblGoodsDonation m = new TblGoodsDonation()
                     {
                         FullName = donation.FullName,
                         Date = donation.Date,
                         NumberOfItems = donation.NumberOfItems,
+                        NameOfGood = donation.NameOfGood,
                         Category = donation.Category,
                         Description = donation.Description,
                         Username = DisplayUsername.passUsername

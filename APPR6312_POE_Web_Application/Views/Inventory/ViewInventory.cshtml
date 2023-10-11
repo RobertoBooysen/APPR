@@ -1,7 +1,7 @@
-﻿@model APPR6312_POE_Web_Application.Models.TblDisaster
+﻿@model IEnumerable<APPR6312_POE_Web_Application.Models.TblInventory>
 
 @{
-    ViewData["Title"] = "DeleteDisaster";
+    ViewData["Title"] = "ViewInventory";
 }
 
 <style>
@@ -49,6 +49,34 @@
                 background-color: #FF3300;
             }
 
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 20px;
+    }
+
+    th {
+        background-color: #800080;
+        color: white;
+    }
+
+    .btn {
+        padding: 2px 6px;
+        font-size: 15px;
+        color: white;
+        background: #800080;
+        border: none;
+        border-radius: 5px;
+    }
+
+        .btn:hover {
+            background: #FF3300;
+        }
+
     .header {
         width: 100%;
         margin: 50px auto 0px;
@@ -59,35 +87,6 @@
         border-bottom: none;
         border-radius: 10px 10px 0px 0px;
         padding: 20px;
-    }
-
-    .btn {
-        padding: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-        background: #800080;
-        border: none;
-        border-radius: 15px;
-    }
-
-        .btn:hover {
-            background: #FF3300;
-        }
-
-    table {
-        width: 100%;
-        table-layout: fixed;
-        border: 2px solid #FF3300;
-    }
-
-    th, td {
-        text-align: center;
-        border: 2px solid #FF3300;
-    }
-
-    th {
-        width: 50%;
     }
 
     /*The dropdown container (W3Schools, 2023)*/
@@ -181,63 +180,71 @@
 
 <div class="header">
     <!--The header is allocated on top of the form (W3Schools, 2023)-->
-    <h1>Delete Disaster</h1>
+    <h1>View Inventory</h1>
 </div>
-<br />
-
-<h3>Are you sure you want to delete this?</h3>
 
 <br />
 
-<div style="text-align: center; background-color: white; color: black; padding: 20px;">
-    <table style="width: 100%;">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-            <td>@Html.DisplayFor(model => model.StartDate)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.EndDate)</th>
-            <td>@Html.DisplayFor(model => model.EndDate)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Location)</th>
-            <td>@Html.DisplayFor(model => model.Location)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.NameOfDisaster)</th>
-            <td>@Html.DisplayFor(model => model.NameOfDisaster)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Description)</th>
-            <td>@Html.DisplayFor(model => model.Description)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.AllocatedGoods)</th>
-            <td>@Html.DisplayFor(model => model.AllocatedGoods)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.AllocatedMoney)</th>
-            <td>@Html.DisplayFor(model => model.AllocatedMoney)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Status)</th>
-            <td>@Html.DisplayFor(model => model.Status)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Username)</th>
-            <td>@Html.DisplayFor(model => model.Username)</td>
-        </tr>
-    </table>
+<p>
+    <a asp-action="AddInventory" class="btn">Add New Inventory</a>
+</p>
 
-    <br />
+@if (ViewBag.LastTotalReceived != null)
+{
+    <p style="color:green;">Available Money: R @ViewBag.LastTotalReceived</p>
+}
 
-    <form asp-action="DeleteDisaster">
-        <input type="hidden" asp-for="DisasterId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ViewDisaster" class="btn">Back</a>
-    </form>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GoodsInventory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfInventoryGoods)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchasedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoodsInventory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfInventoryGoods)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchasedAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <a asp-action="DetailsInventory" asp-route-id="@item.InventoryID" class="btn">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <br />
 <div class="footer1">
     <p>

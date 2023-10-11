@@ -1,6 +1,8 @@
 ﻿using APPR6312_POE_Web_Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace APPR6312_POE_Web_Application.Controllers
@@ -33,12 +35,22 @@ namespace APPR6312_POE_Web_Application.Controllers
                     //Check if FullName is "Anonymous" to determine anonymity (Troeslen & Japikse, 2021)
                     bool isAnonymous = donation.FullName == "Anonymous";
 
+                    //Getting the last record in the table ordered by Date (Troeslen & Japikse, 2021)
+                    var lastDonation = Poe.TblMonetaryDonations.OrderByDescending(d => d.DonationId).FirstOrDefault();
+
+                    //Calculating the newTotalReceived based on the last donation's TotalReceived (Troeslen & Japikse, 2021)
+                    int newTotalReceived = lastDonation != null ? lastDonation.TotalReceived + donation.Amount : donation.Amount;
+
+                    //Formatting the time (Troeslen & Japikse, 2021)
+                    donation.Date = DateTime.ParseExact(donation.Date.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
                     //Creating a new monetary donation object and add it to the database (Troeslen & Japikse, 2021)
                     TblMonetaryDonation m = new TblMonetaryDonation()
                     {
                         FullName = donation.FullName,
                         Date = donation.Date,
                         Amount = donation.Amount,
+                        TotalReceived = newTotalReceived,
                         Username = DisplayUsername.passUsername
                     };
                     Poe.TblMonetaryDonations.Add(m);
@@ -57,6 +69,24 @@ namespace APPR6312_POE_Web_Application.Controllers
         //Action method for displaying the list of monetary donations (Troeslen & Japikse, 2021)
         public IActionResult ViewMonetary()
         {
+            //Getting the total donated amount (Troeslen & Japikse, 2021)
+            var totalReceivedSum = Poe.TblMonetaryDonations
+                .Select(d => d.Amount)
+                .Sum();
+
+            //Add the total donations value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.totalReceivedSum = totalReceivedSum;
+
+
+            //Getting the last TotalReceived value from the last donation (Troeslen & Japikse, 2021)
+            var lastTotalReceived = Poe.TblMonetaryDonations
+                .OrderByDescending(d => d.DonationId)
+                .Select(d => d.TotalReceived)
+                .FirstOrDefault();
+
+            //Add the lastTotalReceived value to a ViewBag (Troeslen & Japikse, 2021)
+            ViewBag.LastTotalReceived = lastTotalReceived;
+
             List<TblMonetaryDonation> temp = Poe.TblMonetaryDonations.ToList();
             return View(temp);
         }
