@@ -10,7 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: 'APPR6312_POE_ST10085125\APPR6312_POE_Web_Application.sln'
+  solution: 'C:\Users\User\source\repos\APPR6312_POE_Task 2_ST10085125\APPR6312_POE_Web_Application.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
