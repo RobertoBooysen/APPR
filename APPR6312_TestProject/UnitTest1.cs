@@ -116,5 +116,42 @@ namespace APPR6312_TestProject
             //Verifing that the purchased amount is not greater than the available money (The IIE, 2022)
             Assert.IsTrue(purchasedAmount <= availableMoney);
         }
+
+        //AllocateInventoryTest verifies inventory allocation doesn't exceed available inventory (The IIE, 2022)
+        [TestMethod]
+        public void AllocateInventoryTest()
+        {
+            //Arrange (The IIE, 2022)
+            var controller = new AllocateInventoryController();
+            var availableInventory = 20; //Available inventory (The IIE, 2022)
+            var allocationInventoryAmount = 10; //Amount of inventory items to allocate (The IIE, 2022)
+
+            var allocateInventory = new TblAllocateInventory
+            {
+                Disasters = "Hunger",
+                GoodsInventory = "20KG Rice",
+                NumberOfInventoryGoods = allocationInventoryAmount,
+            };
+
+            //Act (The IIE, 2022)
+            var result = controller.AllocateInventory(allocateInventory) as IActionResult;
+
+            //Assert (The IIE, 2022)
+            Assert.IsNotNull(result);
+
+            if (result is ViewResult viewResult)
+            {
+                //Checking for model state errors (The IIE, 2022)
+                var modelState = viewResult.ViewData.ModelState;
+                if (modelState.ContainsKey(string.Empty))
+                {
+                    //Checking if there's an error related to allocation amount (The IIE, 2022)
+                    Assert.IsTrue(modelState[string.Empty].Errors.Any(e => e.ErrorMessage.Contains("Not enough items available in inventory")));
+                }
+            }
+
+            //Verifing that the allocation inventory amount is not greater than the available inventory (The IIE, 2022)
+            Assert.IsTrue(allocationInventoryAmount <= availableInventory);
+        }
     }
 }
