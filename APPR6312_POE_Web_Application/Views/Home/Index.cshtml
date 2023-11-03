@@ -152,6 +152,32 @@
 </div>
 
 <br />
+<br />
+
+<div class="text-center">
+    <h3 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;"> Active Disasters & Allocations</h3>
+</div>
+
+<div style="overflow-x:auto;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Disaster</strong></th>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Money Allocated</strong></th>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Goods Allocated</strong></th>
+        </tr>
+        @foreach (var disaster in ViewBag.CurrentActiveDisasters)
+        {
+            <tr>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">@disaster.NameOfDisaster</td>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">R @disaster.AllocatedMoney</td>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">@ViewBag.AllocatedGoodsList[ViewBag.CurrentActiveDisasters.IndexOf(disaster)]</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<br />
 <div class="footer1">
     <p>
         Copyright ©2023 Disaster Alleviation Foundation. All rights reserved
