@@ -45,6 +45,7 @@ namespace APPR6312_TestProject
             //Verifing that the goods allocation amount is not greater than the available goods inventory (The IIE, 2022)
             Assert.IsTrue(goodsAllocationAmount <= availableGoods);
         }
+
         //AllocateMoneyTest verifies money allocation doesn't exceed available money (The IIE, 2022)
         [TestMethod]
         public void AllocateMoneyTest()
@@ -77,6 +78,43 @@ namespace APPR6312_TestProject
 
             //Verifing that the allocation amount is not greater than the available money (The IIE, 2022)
             Assert.IsTrue(allocationAmount < availableMoney);
+        }
+
+        //AddInventoryTest verifies inventory amount doesn't exceed available money (The IIE, 2022)
+        [TestMethod]
+        public void AddInventoryTest()
+        {
+            //Arrange (The IIE, 2022)
+            var controller = new InventoryController();
+            var availableMoney = 10000; //Available money (The IIE, 2022)
+            var purchasedAmount = 2000; //Amount to purchase inventory (The IIE, 2022)
+
+            var inventory = new TblInventory
+            {
+                GoodsInventory = "20KG Rice",
+                NumberOfInventoryGoods = 10,
+                PurchasedAmount = purchasedAmount,
+            };
+
+            //Act (The IIE, 2022)
+            var result = controller.AddInventory(inventory) as IActionResult;
+
+            //Assert (The IIE, 2022)
+            Assert.IsNotNull(result);
+
+            if (result is ViewResult viewResult)
+            {
+                //Checking for model state errors (The IIE, 2022)
+                var modelState = viewResult.ViewData.ModelState;
+                if (modelState.ContainsKey(string.Empty))
+                {
+                    //Checking if there's an error related to purchase amount (The IIE, 2022)
+                    Assert.IsTrue(modelState[string.Empty].Errors.Any(e => e.ErrorMessage.Contains("Not enough money available for this purchase")));
+                }
+            }
+
+            //Verifing that the purchased amount is not greater than the available money (The IIE, 2022)
+            Assert.IsTrue(purchasedAmount <= availableMoney);
         }
     }
 }
