@@ -22,26 +22,71 @@ namespace APPR6312_POE_Web_Application.Controllers
         //This action method returns the "Index" view (Troeslen & Japikse, 2021)
         public IActionResult Index()
         {
-            //Connection to database (The IIE, 2022)
+            //Connection to the database (The IIE, 2022)
             APPR6312_POEContext Poe = new APPR6312_POEContext();
 
             //Retrieving the count of records in the TblGoodsDonations table (Troeslen & Japikse, 2021)
             int donationCount = Poe.TblGoodsDonations.Count();
 
-            //Storing the donation count in ViewData to pass it to the view (Troeslen & Japikse, 2021)
-            ViewData["DonationCount"] = donationCount;
+            //Initialize totalAllocatedItems to 0 (Troeslen & Japikse, 2021)
+            int totalAllocatedItems = 0;
 
-            //Retrieving the count of records in the TblMonetaryDonations table (Troeslen & Japikse, 2021)
-            int monetaryCount = Poe.TblMonetaryDonations.Count();
+            //Iterating through each row in Poe.TblDisasters (Troeslen & Japikse, 2021)
+            foreach (var row in Poe.TblDisasters)
+            {
+                //Initializing rowtotalAllocatedItems for the current row to 0 (Troeslen & Japikse, 2021)
+                int rowtotalAllocatedItems = row.AllocatedGoods
+                    .Split(',') //Splitting the AllocatedGoods string into parts using a comma as the delimiter (Troeslen & Japikse, 2021)
+                    .Select(part => int.TryParse(part.Split(':').Last().Trim(), out int value) ? value : 0)
+                    //Attempting to parse the numeric value after the colon; if successful, return the parsed value, otherwise return 0 (Troeslen & Japikse, 2021)
+                    .Sum(); //Calculating the sum of rowtotalAllocatedItems (Troeslen & Japikse, 2021)
 
-            //Storing the monetary donation count in ViewData (Troeslen & Japikse, 2021)
-            ViewData["MonetaryCount"] = monetaryCount;
+                //Adding rowtotalAllocatedItems to totalAllocatedItems (Troeslen & Japikse, 2021)
+                totalAllocatedItems += rowtotalAllocatedItems;
+            }
 
-            //Retrieving the count of records in the TblDisasters table (Troeslen & Japikse, 2021)
-            int disasterCount = Poe.TblDisasters.Count();
+            //Storing the grand total sum in ViewData with the key "AllocatedGoodsSum" (Troeslen & Japikse, 2021)
+            ViewData["AllocatedGoodsSum"] = totalAllocatedItems;
 
-            //Storing the disaster count in ViewData (Troeslen & Japikse, 2021)
-            ViewData["DisastersCount"] = disasterCount;
+
+            //Retrieving the sum in ViewData in the TblMonetaryDonations table (Troeslen & Japikse, 2021)
+            var totalAmount = Poe.TblMonetaryDonations.Sum(donation => donation.Amount);
+
+            //Storing the monetary donation sum amount in ViewData (Troeslen & Japikse, 2021)
+            ViewData["MonetaryAmount"] = totalAmount;
+
+            //Retrieving the count of active disasters in the TblDisasters table (Troeslen & Japikse, 2021)
+            int activeDisasterCount = Poe.TblDisasters.Count(disaster => disaster.Status == "Active");
+
+            //Storing the active disaster count in ViewData (Troeslen & Japikse, 2021)
+            ViewData["ActiveDisastersCount"] = activeDisasterCount;
+
+            //Retrieving a list of active disasters
+            List<TblDisaster> activeDisasters = Poe.TblDisasters
+                .Where(d => d.Status == "Active")
+                .ToList();
+
+            //Creating a list to store the allocated goods for each active disaster (Troeslen & Japikse, 2021)
+            List<string> allocatedGoodsList = new List<string>();
+
+            //Retrieving allocated goods for each active disaster (Troeslen & Japikse, 2021)
+            foreach (var disaster in activeDisasters)
+            {
+                allocatedGoodsList.Add(disaster.AllocatedGoods);
+            }
+
+            //Getting the total number of items in TblGoodsDonations (Troeslen & Japikse, 2021)
+            int numberOfItems = Poe.TblGoodsDonations.Count();
+
+            //Calculating the total allocated money for active disasters (Troeslen & Japikse, 2021)
+            int allocateMoney = Poe.TblDisasters.Sum(d => d.AllocatedMoney);
+
+            //Set ViewBag properties to pass data to the view (Troeslen & Japikse, 2021)
+            ViewBag.TotalAmount = totalAmount;
+            ViewBag.NumberOfItems = numberOfItems;
+            ViewBag.AllocateMoney = allocateMoney;
+            ViewBag.CurrentActiveDisasters = activeDisasters;
+            ViewBag.AllocatedGoodsList = allocatedGoodsList;
 
             //Return the "Index" view along with ViewData (Troeslen & Japikse, 2021)
             return View();
