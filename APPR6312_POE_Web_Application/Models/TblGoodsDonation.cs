@@ -21,7 +21,11 @@ namespace APPR6312_POE_Web_Application.Models
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        [Display(Name = "Items")]
+        [Display(Name = "Number of items")]
+        public int NumberOfItemsDonated { get; set; }
+
+        [Required(ErrorMessage = "This field is required")]
+        [Display(Name = "Available items")]
         public int NumberOfItems { get; set; }
 
         [Required(ErrorMessage = "This field is required")]

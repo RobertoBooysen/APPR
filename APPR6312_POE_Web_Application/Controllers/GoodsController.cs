@@ -68,12 +68,14 @@ namespace APPR6312_POE_Web_Application.Controllers
                     {
                         FullName = donation.FullName,
                         Date = donation.Date,
+                        NumberOfItemsDonated = donation.NumberOfItems,
                         NumberOfItems = donation.NumberOfItems,
                         NameOfGood = donation.NameOfGood,
                         Category = donation.Category,
                         Description = donation.Description,
                         Username = DisplayUsername.passUsername
                     };
+
                     Poe.TblGoodsDonations.Add(m);
                     Poe.SaveChanges();
                     //Redirecting to the ViewGoods action (Troeslen & Japikse, 2021)

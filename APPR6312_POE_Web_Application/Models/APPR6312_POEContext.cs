@@ -146,6 +146,8 @@ namespace APPR6312_POE_Web_Application.Models
 
                 entity.Property(e => e.NumberOfItems).HasColumnName("number_of_items");
 
+                entity.Property(e => e.NumberOfItemsDonated).HasColumnName("number_of_items_donated");
+
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(100)
