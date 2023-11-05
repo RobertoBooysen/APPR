@@ -65,6 +65,7 @@ namespace APPR6312_POE_Web_Application.Controllers
                         TblInventory m = new TblInventory()
                         {
                             GoodsInventory = inventory.GoodsInventory,
+                            numberOfInventoryPurchased = inventory.NumberOfInventoryGoods,
                             NumberOfInventoryGoods = inventory.NumberOfInventoryGoods,
                             PurchasedAmount = inventory.PurchasedAmount,
                             Username = DisplayUsername.passUsername

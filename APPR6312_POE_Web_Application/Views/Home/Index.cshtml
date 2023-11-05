@@ -115,27 +115,61 @@
 <br />
 
 <div class="text-center">
-    <p>Below are the totals of our donations, monetary donations, and active disaster relief initiatives:</p>
+    <h3 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;">Overview of Donations</h3>
 </div>
 
 <br />
 
 <div style="overflow-x:auto;">
-    <table>
+    <table style="border: 1px solid #800080;">
         <tr>
-            <td>Total Donations</td>
-            <td><span class="circle">@ViewData["DonationCount"]</span></td>
+            <th style="border: 1px solid #800080;background-color:#800080;color:white;"><strong>Donations</strong></th>
+            <th style="border: 1px solid #800080; text-align: center;background-color:#800080;color:white;"><strong>Totals</strong></th>
         </tr>
         <tr>
-            <td>Total Monetary Donations</td>
-            <td><span class="circle">@ViewData["MonetaryCount"]</span></td>
+            <td style="width: 33.33%; border: 1px solid #800080;">Total Monetary Donations Received</td>
+            <td style="width: 33.33%; border: 1px solid #800080;">
+                <div style="background-color: #800080; padding: 5px; border-radius: 10px; text-align: center; color: white;">
+                    <strong>R @ViewData["MonetaryAmount"]</strong>
+                </div>
+            </td>
         </tr>
         <tr>
-            <td>Total Disasters</td>
-            <td><span class="circle">@ViewData["DisastersCount"]</span></td>
+            <td style="width: 33.33%; border: 1px solid #800080;">Total Number Of Goods Received</td>
+            <td style="width: 33.33%; border: 1px solid #800080;">
+                <div style="background-color: #800080; padding: 5px; border-radius: 10px; text-align: center; color: white;">
+                    <strong>@ViewData["AllocatedGoodsSum"]</strong>
+                </div>
+            </td>
         </tr>
     </table>
 </div>
+
+<br />
+<br />
+
+<div class="text-center">
+    <h3 style="color: #800080;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;text-align: center;text-transform: uppercase;"> Active Disasters & Allocations</h3>
+</div>
+
+<div style="overflow-x:auto;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Disaster</strong></th>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Money Allocated</strong></th>
+            <th style="width: 33.33%; text-align:center; border: 1px solid #800080;background-color:#800080;color:white;"><strong>Goods Allocated</strong></th>
+        </tr>
+        @foreach (var disaster in ViewBag.CurrentActiveDisasters)
+        {
+            <tr>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">@disaster.NameOfDisaster</td>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">R @disaster.AllocatedMoney</td>
+                <td style="width: 33.33%; text-align:center; border: 1px solid #800080;">@ViewBag.AllocatedGoodsList[ViewBag.CurrentActiveDisasters.IndexOf(disaster)]</td>
+            </tr>
+        }
+    </table>
+</div>
+
 
 <br />
 <div class="footer1">

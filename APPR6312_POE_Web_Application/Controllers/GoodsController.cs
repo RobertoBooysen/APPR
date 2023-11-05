@@ -10,7 +10,7 @@ namespace APPR6312_POE_Web_Application.Controllers
 {
     public class GoodsController : Controller
     {
-        //Connection to database (The IIE, 2022) 
+        //Connection to database (The IIE, 2022)  
         APPR6312_POEContext Poe = new APPR6312_POEContext();
 
         //Action method for displaying the form to add a goods donation (Troeslen & Japikse, 2021)
@@ -68,12 +68,14 @@ namespace APPR6312_POE_Web_Application.Controllers
                     {
                         FullName = donation.FullName,
                         Date = donation.Date,
+                        NumberOfItemsDonated = donation.NumberOfItems,
                         NumberOfItems = donation.NumberOfItems,
                         NameOfGood = donation.NameOfGood,
                         Category = donation.Category,
                         Description = donation.Description,
                         Username = DisplayUsername.passUsername
                     };
+
                     Poe.TblGoodsDonations.Add(m);
                     Poe.SaveChanges();
                     //Redirecting to the ViewGoods action (Troeslen & Japikse, 2021)

@@ -201,6 +201,9 @@
                 @Html.DisplayNameFor(model => model.GoodsInventory)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.numberOfInventoryPurchased)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NumberOfInventoryGoods)
             </th>
             <th>
@@ -218,6 +221,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.GoodsInventory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numberOfInventoryPurchased)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfInventoryGoods)

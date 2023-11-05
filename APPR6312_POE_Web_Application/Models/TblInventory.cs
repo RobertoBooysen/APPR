@@ -16,7 +16,11 @@ namespace APPR6312_POE_Web_Application.Models
         public int PurchasedAmount { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        [Display(Name = "Number Of Goods")]
+        [Display(Name = "Number Of Inventory Purchased")]
+        public int numberOfInventoryPurchased { get; set; }
+
+        [Required(ErrorMessage = "This field is required")]
+        [Display(Name = "Available Inventory")]
         public int NumberOfInventoryGoods { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
